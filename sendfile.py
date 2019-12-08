@@ -62,10 +62,11 @@ def resendform(formdata,sequence,current_key):
 	table_start = whole_html.find("<div align=\"center\">")
 	table_end = whole_html.find("<p class=\"comm_end_style\">",table_start)
 	html_result = whole_html[table_start:table_end]
-	html_log = open("received_html"+str(sequence)+".txt","w+")
-	html_log.write(whole_html)
 	with open('html_files/html_file'+str(sequence)+'.html','w+') as html_file:
-		html_file.write(html_result)
+		if html_result == "":
+			html_file.write(current_key)
+		else:
+			html_file.write(html_result)
 
 	word_list_start = whole_html.find(">Реєстр</th><th scope=")
 	current_key_start = whole_html.find(">"+current_key+"</a></td><td width=")
@@ -84,8 +85,8 @@ def resendform(formdata,sequence,current_key):
 
 if __name__ == '__main__':
 	os.system("echo '' | cat > debug_log.txt")
-	key = 'А́бе'
-	sequence = 74
+	key = 'аб\'юра́ція'
+	sequence = 323
 	count = 0
 	while sequence < 260000:
 		p1 = Process(target=capturepackets)
