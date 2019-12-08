@@ -38,9 +38,10 @@ def sendform(key,count):
 
 	for x in wireshark_processes:
 		pids.append(x.split(' ')[0])
-		if count > 2:
+		if count > 3:
 			pass
-			os.system("kill -KILL "+pids[0])
+			for i in range(len(pids)-4):
+				os.system("kill -KILL "+pids[i])
 
 def getformdata():
 	cap = pyshark.FileCapture('sentrequests.pcap',display_filter='urlencoded-form')
@@ -48,8 +49,11 @@ def getformdata():
 	try:
 		with open('datafile.txt','w+') as datafile:
 			datafile.write(cap[0].http.file_data)
+		print("Success")
+		#print(cap[0].http.file_data)
 		return(cap[0].http.file_data)
 	except:
+		print("Failure")
 		return("Failure")
 
 def resendform(formdata,sequence,current_key):
@@ -58,6 +62,8 @@ def resendform(formdata,sequence,current_key):
 	table_start = whole_html.find("<div align=\"center\">")
 	table_end = whole_html.find("<p class=\"comm_end_style\">",table_start)
 	html_result = whole_html[table_start:table_end]
+	html_log = open("received_html"+str(sequence)+".txt","w+")
+	html_log.write(whole_html)
 	with open('html_files/html_file'+str(sequence)+'.html','w+') as html_file:
 		html_file.write(html_result)
 
@@ -67,7 +73,7 @@ def resendform(formdata,sequence,current_key):
 	next_key_start = whole_html.find(")\">",current_key_start) + 3
 	next_key_stop = whole_html.find("</a></td><td width=",next_key_start)
 	next_key = whole_html[next_key_start:next_key_stop]
-
+	print("Start:"+str(next_key_start)+"   Stop:"+str(next_key_stop)+"   Key:"+next_key)
 	while next_key == current_key:
 		next_key_start = whole_html.find(")\">",next_key_start) + 3
 		next_key_stop = whole_html.find("</a></td><td width=",next_key_start)
@@ -78,12 +84,12 @@ def resendform(formdata,sequence,current_key):
 
 if __name__ == '__main__':
 	os.system("echo '' | cat > debug_log.txt")
-	key = 'а'
-	sequence = 0
+	key = 'А́бе'
+	sequence = 74
 	count = 0
-	while sequence < 26000:
+	while sequence < 260000:
 		p1 = Process(target=capturepackets)
-		print(key)
+		#print(key)
 		p2 = Process(target=sendform,args=(key,count))
 		p1.start()
 		time.sleep(0.5)
@@ -93,7 +99,7 @@ if __name__ == '__main__':
 		my_form_data = getformdata()
 		if my_form_data != "Failure":
 			key = resendform(my_form_data,sequence,key)
-			print(key)
+			#print(key)
 			sequence += 1
 			with open('debug_log.txt','a') as my_log_file:
 				my_log_file.write("Sequence:  "+str(sequence)+"  ")
