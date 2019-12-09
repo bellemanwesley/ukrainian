@@ -14,7 +14,7 @@ def capturepackets():
 		os.remove('sentrequests.pcap')
 	except:
 		pass
-	os.system("wireshark -i en0 -f 'host lcorp.ulif.org.ua and port 80' -k -w sentrequests.pcap -a duration:7")
+	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 7 -W 1")
 
 def sendform(key,count):
 	option = Options()
@@ -33,28 +33,25 @@ def sendform(key,count):
 	submit_element = browser.find_element_by_name("ctl00$ContentPlaceHolder1$search")
 	submit_element.click()
 
-	wireshark_processes = os.popen("ps -ax | grep Wireshark").readlines()
-	pids = []
-
-	for x in wireshark_processes:
-		pids.append(x.split(' ')[0])
-		if count > 3:
-			pass
-			for i in range(len(pids)-4):
-				os.system("kill -KILL "+pids[i])
-
 def getformdata():
-	cap = pyshark.FileCapture('sentrequests.pcap',display_filter='urlencoded-form')
+	while_exit = 0
+	while while_exit == 0:
+		try:
+			my_form_data = pyshark.FileCapture('sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
+			while_exit = 1
+		except:
+			print("Failure")
+			return("Failure")
+	t_search_start = my_form_data.find('ContentPlaceHolder1$tsearch=') + 28
+	t_search_end = my_form_data.find("&",t_search_start)
+	for i in range(t_search_start,t_search_end):
+		if my_form_data[i] == "'":
+			my_form_data = my_form_data[0:i] + "%27" + my_form_data[i+1:len(my_form_data)]
 
-	try:
-		with open('datafile.txt','w+') as datafile:
-			datafile.write(cap[0].http.file_data)
-		print("Success")
-		#print(cap[0].http.file_data)
-		return(cap[0].http.file_data)
-	except:
-		print("Failure")
-		return("Failure")
+	with open('datafile.txt','w+') as datafile:
+		datafile.write(my_form_data)
+	print("Success")
+	return(my_form_data)
 
 def resendform(formdata,sequence,current_key):
 	my_log_file = open("debug_log.txt","a")
@@ -85,8 +82,8 @@ def resendform(formdata,sequence,current_key):
 
 if __name__ == '__main__':
 	os.system("echo '' | cat > debug_log.txt")
-	key = 'аб\'юра́ція'
-	sequence = 323
+	key = "аустерлі́цький"
+	sequence = 505
 	count = 0
 	while sequence < 260000:
 		p1 = Process(target=capturepackets)
