@@ -395,4 +395,15 @@ Sequence: 419    Key: Аудрі́ні
 Sequence: 420    Key: А́уе
 Sequence: 421    Key: Ауе́зов
 Sequence: 422    Key: Аузу́н-Узе́нь
-Sequence: 423    
+Sequence: 423    Key: ау́кання
+Sequence: 424    Key: ау́кати
+Sequence: 425    Key: ау́катися
+Sequence: 426    Key: ау́кнутися
+Sequence: 427    Key: ауксано́метр
+Sequence: 428    Key: аукси́н
+Sequence: 429    Key: ауксоспо́ра
+Sequence: 430    Key: ауксотро́ф
+Sequence: 431    Key: аукці́йний
+Sequence: 432    Key: аукціо́н
+Sequence: 433    Key: аукціоне́р
+Sequence: 434    
