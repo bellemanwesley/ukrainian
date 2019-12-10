@@ -8,6 +8,7 @@ import pyshark
 import time
 import os
 from multiprocessing import Process
+import copy
 
 def capturepackets():
 	try:
@@ -16,7 +17,7 @@ def capturepackets():
 		pass
 	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 7 -W 1")
 
-def sendform(key,count):
+def sendform(key):
 	option = Options()
 	option.add_argument("--headless")
 	option.binary_location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
@@ -55,7 +56,17 @@ def getformdata():
 
 def resendform(formdata,sequence,current_key):
 	my_log_file = open("debug_log.txt","a")
+	
 	whole_html = os.popen("curl http://lcorp.ulif.org.ua/dictua/dictua.aspx -X POST -d '"+formdata+"'").read()
+	current_key_correct = whole_html.find("<span class=\"word_style\" >"+current_key)
+
+	if current_key_correct == -1:
+		print("Bad Key")
+		return(['nokey'])
+	else:
+		my_log_file.write("Key: "+current_key+"\n")
+		my_log_file.close()
+
 	table_start = whole_html.find("<div align=\"center\">")
 	table_end = whole_html.find("<p class=\"comm_end_style\">",table_start)
 	html_result = whole_html[table_start:table_end]
@@ -65,43 +76,55 @@ def resendform(formdata,sequence,current_key):
 		else:
 			html_file.write(html_result)
 
-	word_list_start = whole_html.find(">Реєстр</th><th scope=")
-	current_key_start = whole_html.find(">"+current_key+"</a></td><td width=")
 
-	next_key_start = whole_html.find(")\">",current_key_start) + 3
-	next_key_stop = whole_html.find("</a></td><td width=",next_key_start)
-	next_key = whole_html[next_key_start:next_key_stop]
-	print("Start:"+str(next_key_start)+"   Stop:"+str(next_key_stop)+"   Key:"+next_key)
-	while next_key == current_key:
+	next_key_start = whole_html.find(">"+current_key+"</a></td><td width=")
+	word_list_start = copy.copy(next_key_start) - 1
+	key_search_end = whole_html.find("</table>", next_key_start) - 65
+
+	next_keys = []
+	next_key_stop = next_key_start
+	while next_key_start > word_list_start and next_key_start < key_search_end and next_key_stop > word_list_start and next_key_stop < key_search_end:
 		next_key_start = whole_html.find(")\">",next_key_start) + 3
-		next_key_stop = whole_html.find("</a></td><td width=",next_key_start)
-		next_key = whole_html[next_key_start:next_key_stop]		
+		next_key_stop = whole_html.find("</a></td><td",next_key_start)
+		if next_key_start != -1 and next_key_stop != -1:
+			next_key = whole_html[next_key_start:next_key_stop]
 
-	my_log_file.write("Key info: "+current_key+"  "+str(next_key_start)+"  "+str(next_key_stop)+"  "+next_key+"\n")
-	return(next_key)
+			while next_key == current_key:
+				next_key_start = whole_html.find(")\">",next_key_start) + 3
+				next_key_stop = whole_html.find("</a></td><td",next_key_start)
+				next_key = whole_html[next_key_start:next_key_stop]
+			next_keys.append(next_key)
+			currrent_key = next_key	
+		else:
+			next_key_stop = key_search_end
+	return(next_keys)
 
-if __name__ == '__main__':
-	os.system("echo '' | cat > debug_log.txt")
-	key = "аустерлі́цький"
-	sequence = 505
-	count = 0
-	while sequence < 260000:
+def generate_pcap(key):
 		p1 = Process(target=capturepackets)
-		#print(key)
-		p2 = Process(target=sendform,args=(key,count))
+		p2 = Process(target=sendform,args=(key,))
 		p1.start()
 		time.sleep(0.5)
 		p2.start()
 		p2.join()
 		time.sleep(0.5)
-		my_form_data = getformdata()
-		if my_form_data != "Failure":
-			key = resendform(my_form_data,sequence,key)
-			#print(key)
-			sequence += 1
-			with open('debug_log.txt','a') as my_log_file:
-				my_log_file.write("Sequence:  "+str(sequence)+"  ")
-		count += 1
-	#print(resendform(getformdata(),sequence))
+
+if __name__ == '__main__':
+	os.system("echo '' | cat > debug_log.txt")
+	keys = ["Абака́н"]
+	sequence = 27
+	while sequence < 260000:
+		with open('debug_log.txt','a') as my_log_file:
+			my_log_file.write("Sequence: "+str(sequence)+"    ")
+		result_keys = ['nokey']
+		key_i = 0
+		while result_keys[0] == 'nokey':
+			my_form_data = "Failure"
+			while my_form_data == "Failure":
+				generate_pcap(keys[key_i])
+				my_form_data = getformdata()
+			result_keys = resendform(my_form_data,sequence,keys[key_i])
+			key_i += 1
+		sequence += 1
+		keys = result_keys
 
 
