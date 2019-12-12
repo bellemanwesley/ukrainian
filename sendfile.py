@@ -20,7 +20,7 @@ def capturepackets():
 def sendform(key):
 	option = Options()
 	option.add_argument("--headless")
-	option.binary_location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+	#option.binary_location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
 	browser = webdriver.Chrome(executable_path='/Users/wesley/Documents/Personal Development/IT/Ukrainian/chromedriver', options=option)
 	browser.get("http://lcorp.ulif.org.ua/dictua/")
@@ -110,8 +110,8 @@ def generate_pcap(key):
 
 if __name__ == '__main__':
 	os.system("echo '' | cat > debug_log.txt")
-	keys = ["Абака́н"]
-	sequence = 27
+	keys = ["Біле́щина"]
+	sequence = 6429
 	while sequence < 260000:
 		with open('debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
