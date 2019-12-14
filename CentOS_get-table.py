@@ -16,7 +16,7 @@ def capturepackets():
 		os.remove('sentrequests.pcap')
 	except:
 		pass
-	os.system("tcpdump -i enp0s3 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 7 -W 1")
+	os.system("tcpdump -i enp0s3 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 8 -W 1")
 
 def sendform(key):
 	print("Block 1")
@@ -117,9 +117,9 @@ if __name__ == '__main__':
 	display.start()
 
 	os.system("echo '' | cat > debug_log.txt")
-	keys = ["боро́ти"]
-	sequence = 8939
-	while sequence < 260000:
+	keys = ["Ваа́л"]
+	sequence = 0
+	while keys[0][0] == 'в' or keys[0][0] == 'В':
 		with open('debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
 		result_keys = ['nokey']
