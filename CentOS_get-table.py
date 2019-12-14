@@ -9,6 +9,7 @@ import time
 import os
 from multiprocessing import Process
 import copy
+from pyvirtualdisplay import Display
 
 def capturepackets():
 	try:
@@ -18,8 +19,12 @@ def capturepackets():
 	os.system("tcpdump -i enp0s3 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 7 -W 1")
 
 def sendform(key):
+	display = Display(visible=0, size=(800, 800))
+	display.start()
+
 	option = Options()
 	option.add_argument("--headless")
+	chrome_options.add_argument('--no-sandbox')
 	#option.binary_location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
 	browser = webdriver.Chrome(executable_path='../tools/chromedriver', options=option)
