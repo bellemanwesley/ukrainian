@@ -19,9 +19,7 @@ def capturepackets():
 	os.system("tcpdump -i enp0s3 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 7 -W 1")
 
 def sendform(key):
-	display = Display(visible=0, size=(800, 800))
-	display.start()
-
+	print("Block 1")
 	option = Options()
 	option.add_argument("--headless")
 	option.add_argument('--no-sandbox')
@@ -38,6 +36,7 @@ def sendform(key):
 	# get the submit button element
 	submit_element = browser.find_element_by_name("ctl00$ContentPlaceHolder1$search")
 	submit_element.click()
+	print("Block 2")
 
 def getformdata():
 	while_exit = 0
@@ -114,6 +113,9 @@ def generate_pcap(key):
 		time.sleep(0.5)
 
 if __name__ == '__main__':
+	display = Display(visible=0, size=(800, 800))
+	display.start()
+
 	os.system("echo '' | cat > debug_log.txt")
 	keys = ["боро́ти"]
 	sequence = 8939
