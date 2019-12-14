@@ -15,7 +15,7 @@ def capturepackets():
 		os.remove('sentrequests.pcap')
 	except:
 		pass
-	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 7 -W 1")
+	os.system("tcpdump -i enp0s3 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 7 -W 1")
 
 def sendform(key):
 	option = Options()
