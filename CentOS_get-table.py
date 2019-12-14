@@ -24,7 +24,7 @@ def sendform(key):
 
 	option = Options()
 	option.add_argument("--headless")
-	chrome_options.add_argument('--no-sandbox')
+	option.add_argument('--no-sandbox')
 	#option.binary_location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
 	browser = webdriver.Chrome(executable_path='../tools/chromedriver', options=option)
