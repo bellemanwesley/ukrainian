@@ -41,12 +41,12 @@ def sendform(key):
 def getformdata():
 	while_exit = 0
 	while while_exit == 0:
-		#try:
-		my_form_data = pyshark.FileCapture('sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
-		while_exit = 1
-		#except:
-			#print("Failure")
-			#return("Failure")
+		try:
+			my_form_data = pyshark.FileCapture('sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
+			while_exit = 1
+		except:
+			print("Failure")
+			return("Failure")
 	t_search_start = my_form_data.find('ContentPlaceHolder1$tsearch=') + 28
 	t_search_end = my_form_data.find("&",t_search_start)
 	for i in range(t_search_start,t_search_end):
