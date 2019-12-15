@@ -7176,4 +7176,23 @@ Sequence: 16781    Key: ви́ладнати
 Sequence: 16782    Key: ви́ладнатися
 Sequence: 16783    Key: виладно́вуватися
 Sequence: 16784    Key: ви́ладнувати
-Sequence: 16785    
+Sequence: 16785    Key: ви́ладнуватися
+Sequence: 16786    Key: ви́лаз
+Sequence: 16787    Key: вила́зити
+Sequence: 16788    Key: ви́лазка
+Sequence: 16789    Key: ви́ламаний
+Sequence: 16790    Key: ви́ламання
+Sequence: 16791    Key: ви́ламати
+Sequence: 16792    Key: вила́муваний
+Sequence: 16793    Key: вила́мування
+Sequence: 16794    Key: вила́мувати
+Sequence: 16795    Key: вила́муватися
+Sequence: 16796    Key: ви́латаний
+Sequence: 16797    Key: ви́латати
+Sequence: 16798    Key: ви́лаштуватися
+Sequence: 16799    Key: ви́лаяний
+Sequence: 16800    Key: ви́лаяти
+Sequence: 16801    Key: ви́лежаний
+Sequence: 16802    Key: ви́лежати
+Sequence: 16803    Key: ви́лежатися
+Sequence: 16804    
