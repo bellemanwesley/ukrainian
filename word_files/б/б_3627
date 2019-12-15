@@ -1,0 +1,63 @@
+<div align="center"> 
+	<span class="word_style" >бо́зна-чи́й </span>
+	<span class="gram_style">– займенник</span>
+</div>
+<br>
+<div align="center" class="comment_style">
+<hr>
+</div>
+
+<table border="1" width="43%" align="center" >
+  <tr class="td_style">
+    <td width="16%" rowspan="2">відмінок</td>
+    <td width="63%" colspan="3">однина</td>
+    <td width="31%" rowspan="2">множина</td>
+  </tr>
+  <tr>
+    <td width="19%" class="td_style">чол. р.</td>
+    <td width="25%" class="td_style">жін. р.</td>
+    <td width="19%" class="td_style">сер. р.</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">називний</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-чи́й</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-чия</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-чиє</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-чиї</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">родовий</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-чийого</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-чиєї</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-чийого</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-чиїх</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">давальний</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-чийому, бо́зна-чиєму</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-чиїй</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-чийому</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-чиїм</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">знахідний</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-чий, бо́зна-чийого</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-чию</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-чиє</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-чиї, бо́зна-чиїх</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">орудний</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-чиїм</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-чиєю</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-чиїм</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-чиїми</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">місцевий</td> 
+    <td width="19%" class="td_inner_center_style">на/у бо́зна на чийому, бо́зна на чиєму, бо́зна на чиїм</td>
+    <td width="25%" class="td_inner_center_style">на/у бо́зна на чиїй</td>
+    <td width="19%" class="td_inner_center_style">на/у бо́зна на чийому, бо́зна на чиєму, бо́зна на чиїм</td>
+    <td width="31%" class="td_inner_center_style">на/у бо́зна на чиїх</td>
+  </tr>
+</table>

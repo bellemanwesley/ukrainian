@@ -1,0 +1,63 @@
+<div align="center"> 
+	<span class="word_style" >будь-яки́й </span>
+	<span class="gram_style">– займенник</span>
+</div>
+<br>
+<div align="center" class="comment_style">
+<hr>
+</div>
+
+<table border="1" width="43%" align="center" >
+  <tr class="td_style">
+    <td width="16%" rowspan="2">відмінок</td>
+    <td width="63%" colspan="3">однина</td>
+    <td width="31%" rowspan="2">множина</td>
+  </tr>
+  <tr>
+    <td width="19%" class="td_style">чол. р.</td>
+    <td width="25%" class="td_style">жін. р.</td>
+    <td width="19%" class="td_style">сер. р.</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">називний</td> 
+    <td width="19%" class="td_inner_center_style">будь-яки́й</td>
+    <td width="25%" class="td_inner_center_style">будь-яка́</td>
+    <td width="19%" class="td_inner_center_style">будь-яке́</td>
+    <td width="31%" class="td_inner_center_style">будь-які́</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">родовий</td> 
+    <td width="19%" class="td_inner_center_style">будь-яко́го</td>
+    <td width="25%" class="td_inner_center_style">будь-яко́ї</td>
+    <td width="19%" class="td_inner_center_style">будь-яко́го</td>
+    <td width="31%" class="td_inner_center_style">будь-яки́х</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">давальний</td> 
+    <td width="19%" class="td_inner_center_style">будь-яко́му</td>
+    <td width="25%" class="td_inner_center_style">будь-які́й</td>
+    <td width="19%" class="td_inner_center_style">будь-яко́му</td>
+    <td width="31%" class="td_inner_center_style">будь-яки́м</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">знахідний</td> 
+    <td width="19%" class="td_inner_center_style">будь-яки́й, будь-яко́го</td>
+    <td width="25%" class="td_inner_center_style">будь-яку́</td>
+    <td width="19%" class="td_inner_center_style">будь-яке́</td>
+    <td width="31%" class="td_inner_center_style">будь-які́, будь-яки́х</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">орудний</td> 
+    <td width="19%" class="td_inner_center_style">будь-яки́м</td>
+    <td width="25%" class="td_inner_center_style">будь-яко́ю</td>
+    <td width="19%" class="td_inner_center_style">будь-яки́м</td>
+    <td width="31%" class="td_inner_center_style">будь-яки́ми</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">місцевий</td> 
+    <td width="19%" class="td_inner_center_style">на/у будь-яко́му, будь-які́м, будь на яко́му, будь на які́м</td>
+    <td width="25%" class="td_inner_center_style">на/у будь-які́й, будь на які́й</td>
+    <td width="19%" class="td_inner_center_style">на/у будь-яко́му, будь-які́м, будь на яко́му, будь на які́м</td>
+    <td width="31%" class="td_inner_center_style">на/у будь-яки́х, будь на яки́х</td>
+  </tr>
+</table>

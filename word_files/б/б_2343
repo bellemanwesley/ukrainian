@@ -1,0 +1,63 @@
+<div align="center"> 
+	<span class="word_style" >бо́зна-котри́й </span>
+	<span class="gram_style">– займенник</span>
+</div>
+<br>
+<div align="center" class="comment_style">
+<hr>
+</div>
+
+<table border="1" width="43%" align="center" >
+  <tr class="td_style">
+    <td width="16%" rowspan="2">відмінок</td>
+    <td width="63%" colspan="3">однина</td>
+    <td width="31%" rowspan="2">множина</td>
+  </tr>
+  <tr>
+    <td width="19%" class="td_style">чол. р.</td>
+    <td width="25%" class="td_style">жін. р.</td>
+    <td width="19%" class="td_style">сер. р.</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">називний</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-котри́й</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-котра́</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-котре́</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-котрі́</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">родовий</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-котро́го</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-котро́ї</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-котро́го</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-котри́х</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">давальний</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-котро́му</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-котрі́й</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-котро́му</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-котри́м</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">знахідний</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-котри́й, бо́зна-котро́го</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-котру́</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-котре́</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-котрі́, бо́зна-котри́х</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">орудний</td> 
+    <td width="19%" class="td_inner_center_style">бо́зна-котри́м</td>
+    <td width="25%" class="td_inner_center_style">бо́зна-котро́ю</td>
+    <td width="19%" class="td_inner_center_style">бо́зна-котри́м</td>
+    <td width="31%" class="td_inner_center_style">бо́зна-котри́ми</td>
+  </tr>
+  <tr>
+    <td width="17%" class="td_left_style">місцевий</td> 
+    <td width="19%" class="td_inner_center_style">на/у бо́зна-котро́му, бо́зна-котрі́м</td>
+    <td width="25%" class="td_inner_center_style">на/у бо́зна-котрі́й</td>
+    <td width="19%" class="td_inner_center_style">на/у бо́зна-котро́му, бо́зна-котрі́м</td>
+    <td width="31%" class="td_inner_center_style">на/у бо́зна-котри́х</td>
+  </tr>
+</table>
