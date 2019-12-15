@@ -7195,4 +7195,12 @@ Sequence: 16800    Key: ви́лаяти
 Sequence: 16801    Key: ви́лежаний
 Sequence: 16802    Key: ви́лежати
 Sequence: 16803    Key: ви́лежатися
-Sequence: 16804    
+Sequence: 16804    Key: виле́жування
+Sequence: 16805    Key: виле́жувати
+Sequence: 16806    Key: виле́жуватися
+Sequence: 16807    Key: ви́леліяти
+Sequence: 16808    Key: ви́летіти
+Sequence: 16809    Key: Виле́цьке
+Sequence: 16810    Key: виле́цький
+Sequence: 16811    Key: Ви́ли
+Sequence: 16812    
