@@ -4,4 +4,4 @@ chromedriver
 debug_log.txt
 datafile.txt
 sentrequests.pcap
-
+ignore_files/
