@@ -94,11 +94,12 @@ def add_dict(my_dict):
 
 if __name__ == '__main__':
 	for file_name in os.listdir("html_files"):
-	#for file_name in ["html_file1.html","html_file39.html"]:
+	#for file_name in ["html_file25139.html"]:
 		if file_name[0:9] == "html_file":
+			print(file_name)
 			file_text = open("html_files/"+file_name,"r").read()
-			if file_text.find("іменник") != -1:
-				file_table = generate_table(file_text)
+			file_table = generate_table(file_text)
+			if file_table[0][0].find("іменник") != -1:
 				new_dict = build_dict_noun(file_table)
 				add_dict(new_dict)
 				file_complete = open("ignore_files/completed_html_files/"+file_name,"w+")

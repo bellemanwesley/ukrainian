@@ -12,10 +12,10 @@ import copy
 
 def capturepackets():
 	try:
-		os.remove('sentrequests.pcap')
+		os.remove('ignore_files/sentrequests.pcap')
 	except:
 		pass
-	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 7 -W 1")
+	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w ignore_files/sentrequests.pcap -G 7 -W 1")
 
 def sendform(key):
 	option = Options()
@@ -38,7 +38,7 @@ def getformdata():
 	while_exit = 0
 	while while_exit == 0:
 		try:
-			my_form_data = pyshark.FileCapture('sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
+			my_form_data = pyshark.FileCapture('ignore_files/sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
 			while_exit = 1
 		except:
 			print("Failure")
@@ -49,13 +49,13 @@ def getformdata():
 		if my_form_data[i] == "'":
 			my_form_data = my_form_data[0:i] + "%27" + my_form_data[i+1:len(my_form_data)]
 
-	with open('datafile.txt','w+') as datafile:
+	with open('ignore_files/datafile.txt','w+') as datafile:
 		datafile.write(my_form_data)
 	print("Success")
 	return(my_form_data)
 
 def resendform(formdata,sequence,current_key):
-	my_log_file = open("debug_log.txt","a")
+	my_log_file = open("ignore_files/debug_log.txt","a")
 	
 	whole_html = os.popen("curl http://lcorp.ulif.org.ua/dictua/dictua.aspx -X POST -d '"+formdata+"'").read()
 	current_key_correct = whole_html.find("<span class=\"word_style\" >"+current_key)
@@ -109,11 +109,11 @@ def generate_pcap(key):
 		time.sleep(0.5)
 
 if __name__ == '__main__':
-	os.system("echo '' | cat > debug_log.txt")
-	keys = ["григо́ро-ма́р'ївський"]
-	sequence = 35600
+	os.system("echo '' | cat > ignore_files/debug_log.txt")
+	keys = ["зами́слення"]
+	sequence = 54346
 	while sequence < 260000:
-		with open('debug_log.txt','a') as my_log_file:
+		with open('ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
 		result_keys = ['nokey']
 		key_i = 0
