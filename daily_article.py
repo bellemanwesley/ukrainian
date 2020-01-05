@@ -64,7 +64,6 @@ def pull_dicts():
 			s3.Bucket('ukrainian-words').download_file(letter+'.json','ignore_files/dicts/'+letter+'.json')
 		except:
 			pass
-	page_list = page.split(" ")
 
 def replace_words(page):
 	page_list = page.split(" ")
