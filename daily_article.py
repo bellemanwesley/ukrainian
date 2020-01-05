@@ -3,6 +3,7 @@ import boto3
 import json
 import copy
 from shutil import copyfile
+from datetime import date
 
 letter_order = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяа́я́е́є́и́і́ї́о́у́ю́'
 cap_letter_order = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯА́Я́Е́Є́И́І́Ї́О́У́Ю́'
@@ -90,4 +91,6 @@ if __name__ == '__main__':
 	page = get_page()
 	page = replace_words(page)
 	write_html(page)
-	os.system("sudo cp ignore_files/new_page.html /var/www/html/2020-01-05.html")
+	os.system("sudo cp ignore_files/new_page.html /var/www/html/articles/"+date.today()+".html")
+
+
