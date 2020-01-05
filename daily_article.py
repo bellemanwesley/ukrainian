@@ -91,6 +91,6 @@ if __name__ == '__main__':
 	page = get_page()
 	page = replace_words(page)
 	write_html(page)
-	os.system("sudo cp ignore_files/new_page.html /var/www/html/articles/"+date.today()+".html")
+	os.system("sudo cp ignore_files/new_page.html /var/www/html/articles/"+str(date.today())+".html")
 
 
