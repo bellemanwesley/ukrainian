@@ -110,8 +110,8 @@ def generate_pcap(key):
 
 if __name__ == '__main__':
 	os.system("echo '' | cat > ignore_files/debug_log.txt")
-	keys = ["зами́слення"]
-	sequence = 54346
+	keys = ["зужитко́ваний"]
+	sequence = 64695
 	while sequence < 260000:
 		with open('ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
