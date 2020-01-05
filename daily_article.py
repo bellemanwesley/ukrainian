@@ -90,4 +90,4 @@ if __name__ == '__main__':
 	page = get_page()
 	page = replace_words(page)
 	write_html(page)
-	copyfile("/ignore_files/new_page.html",)
+	copyfile("/ignore_files/new_page.html","/var/www/html/2020-01-05.html")
