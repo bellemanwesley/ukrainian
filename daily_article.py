@@ -88,9 +88,10 @@ def write_html(text_content):
 
 if __name__ == '__main__':
 	pull_dicts()
+	print("break 1")
 	page = get_page()
 	page = replace_words(page)
 	write_html(page)
-	os.system("sudo cp ignore_files/new_page.html /var/www/html/articles/"+str(date.today())+".html")
+	#os.system("sudo cp ignore_files/new_page.html /var/www/html/articles/"+str(date.today())+".html")
 
 

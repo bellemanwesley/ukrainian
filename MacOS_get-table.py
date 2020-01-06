@@ -70,7 +70,7 @@ def resendform(formdata,sequence,current_key):
 	table_start = whole_html.find("<div align=\"center\">")
 	table_end = whole_html.find("<p class=\"comm_end_style\">",table_start)
 	html_result = whole_html[table_start:table_end]
-	with open('html_files/html_file'+str(sequence)+'.html','w+') as html_file:
+	with open('ignore_files/html_files/html_file'+str(sequence)+'.html','w+') as html_file:
 		if html_result == "":
 			html_file.write(current_key)
 		else:
@@ -110,8 +110,8 @@ def generate_pcap(key):
 
 if __name__ == '__main__':
 	os.system("echo '' | cat > ignore_files/debug_log.txt")
-	keys = ["зужитко́ваний"]
-	sequence = 64695
+	keys = ["Іва́номисль"]
+	sequence = 65151
 	while sequence < 260000:
 		with open('ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
