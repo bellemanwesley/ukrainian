@@ -108,7 +108,7 @@ if __name__ == '__main__':
 		page = replace_words(page)
 		write_html(page)
 		os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
-		os.system("sudo cp articles.css /var/www/html/articles/"+str(date.today())+".html")
+		os.system("sudo cp articles.css /var/www/html/articles/articles.css")
 		print("Done for the day")
 		time.sleep(86400)
 
