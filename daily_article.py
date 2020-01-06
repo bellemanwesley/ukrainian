@@ -4,6 +4,7 @@ import json
 import copy
 from shutil import copyfile
 from datetime import date
+import re
 
 letter_order = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяа́я́е́є́и́і́ї́о́у́ю́'
 cap_letter_order = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯА́Я́Е́Є́И́І́Ї́О́У́Ю́'
@@ -59,6 +60,7 @@ def pull_dicts():
 		os.system("mkdir ignore_files/dicts")
 	except:
 		pass
+	print
 	s3 = boto3.resource('s3')
 	for letter in cap_letter_order+letter_order:
 		try:
@@ -79,19 +81,32 @@ def replace_words(page):
 	return " ".join(page_list)
 
 def write_html(text_content):
-	html_text = "<html><body>"
-	html_text= html_text +text_content
-	html_text = html_text + "</body></html>"
-	html_file = open('ignore_files/new_page.html','w+')
+	text_content = re.sub(r' +',' ',text_content)
+	text_content = re.sub(r'\t','',text_content)
+	words = text_content.count(' ') - 3
+	goal1 = str(words // 120) + ":" + str(int(60*(words/120.0-words//120)))
+	goal2 = str(words // 200) + ":" + str(int(60*(words/200.0-words//200)))
+	text_list = re.split(r'\n+',text_content)	
+	html_text = "<html><head><link rel=\"stylesheet\" href=\"articles.css\"></head><body>"
+	html_text = html_text + "<iframe src=\"http://ipadstopwatch.com/embed.html\" frameborder=\"0\" scrolling=\"no\" width=\"391\" height=\"140\"></iframe>"
+	html_text = html_text + "<div id=\"div0\">" + str(words)  +"-----goal 1: "+str(goal1) +"-----goal 2: " + str(goal2) +  "</div>"
+	html_text = html_text + "<div id=\"div1\">"
+	for x in text_list:
+		html_text= html_text + "<p>" + x + "</p>"
+	html_text = html_text + "</div></body></html>"
+	html_file = open('new_page.html','w+')
 	html_file.write(html_text)
 	html_file.close()
 
 if __name__ == '__main__':
-	pull_dicts()
-	print("break 1")
-	page = get_page()
-	page = replace_words(page)
+	#pull_dicts()
+	#page = get_page()
+	#page = replace_words(page)
+	page_file = open("ignore_files/test_page.txt","r")
+	page = page_file.read()
+	page_file.close()
 	write_html(page)
-	#os.system("sudo cp ignore_files/new_page.html /var/www/html/articles/"+str(date.today())+".html")
+	#os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
+	#os.system("sudo cp articles.css /var/www/html/articles/"+str(date.today())+".html")
 
 
