@@ -104,7 +104,6 @@ if __name__ == '__main__':
 		pull_dicts()
 		page = get_page()
 		page = replace_words(page)
-		page_file.close()
 		write_html(page)
 		os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
 		os.system("sudo cp articles.css /var/www/html/articles/"+str(date.today())+".html")
