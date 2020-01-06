@@ -92,7 +92,7 @@ def write_html(text_content):
 	text_list = re.split(r'\n+',text_content)	
 	html_text = "<html><head><link rel=\"stylesheet\" href=\"articles.css\"></head><body>"
 	html_text = html_text + "<iframe src=\"http://ipadstopwatch.com/embed.html\" frameborder=\"0\" scrolling=\"no\" width=\"391\" height=\"140\"></iframe>"
-	html_text = html_text + "<div id=\"div0\">" + str(words)  +"-----goal 1: "+str(goal1) +"-----goal 2: " + str(goal2) +  "</div>"
+	html_text = html_text + "<div id=\"div0\"><p>" + str(words)  +" Words</p><p>goal 1: "+str(goal1) +"<button>Complete</button></p><p>goal 2: " + str(goal2) +  "<button>Complete</button></p></div>"
 	html_text = html_text + "<div id=\"div1\">"
 	for x in text_list:
 		html_text= html_text + "<p>" + x + "</p>"
@@ -102,13 +102,14 @@ def write_html(text_content):
 	html_file.close()
 
 if __name__ == '__main__':
-	while True:
-		pull_dicts()
-		page = get_page()
-		page = replace_words(page)
-		write_html(page)
-		os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
-		os.system("sudo cp articles.css /var/www/html/articles/articles.css")
-		print("Done for the day")
-		time.sleep(86400)
+	#while True:
+		#pull_dicts()
+		#page = get_page()
+		#page = replace_words(page)
+	with open('ignore_files/test_page.txt','r') as page_file:
+		write_html(page_file.read())
+		#os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
+		#os.system("sudo cp articles.css /var/www/html/articles/articles.css")
+		#print("Done for the day")
+		#time.sleep(86400)
 
