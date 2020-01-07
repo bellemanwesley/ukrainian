@@ -65,12 +65,11 @@ def pull_dicts():
 	except:
 		pass
 	print
-	s3 = boto3.resource('s3')
 	for letter in cap_letter_order+letter_order:
-		try:
-			s3.Bucket('ukrainian-words').download_file(letter+'.json','ignore_files/dicts/'+letter+'.json')
-		except:
-			pass
+		new_json = os.popen("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/"+letter+".json").read()
+		if new_json.find("Access Denied") == -1:
+			with open("ignore_files/dicts/"+letter+".json","w+") as new_file:
+				new_file.write(new_json)
 
 def replace_words(page):
 	page_list = page.split(" ")
@@ -116,7 +115,7 @@ def main():
 if __name__ == '__main__':
 	#with open('ignore_files/test_page.txt','r') as page_file:
 	#write_html(page_file.read())
-	with daemon.DaemonContext():
-		main()
+	#with daemon.DaemonContext():
+	main()
 
 
