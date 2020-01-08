@@ -65,7 +65,7 @@ def pull_dicts():
 		pass
 	print
 	for letter in cap_letter_order+letter_order:
-		print(letter + " " str(letter.encode('utf-8')))
+		print(letter + " " + str(letter.encode('utf-8')))
 		new_json = os.popen("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/"+letter+".json").read()
 		if new_json.find("Access Denied") == -1:
 			with open("ignore_files/dicts/"+letter+".json","w+") as new_file:
