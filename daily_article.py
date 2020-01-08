@@ -8,7 +8,8 @@ from shutil import copyfile
 from datetime import date
 import re
 import time
-import yapdi 
+from daemon import DaemonContext
+
 letter_order = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяа́я́е́є́и́і́ї́о́у́ю́'
 cap_letter_order = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯА́Я́Е́Є́И́І́Ї́О́У́Ю́'
 
@@ -115,8 +116,9 @@ def main():
 		time.sleep(86400)	
 
 if __name__ == '__main__':
-	daemon = yapdi.Daemon()
-	retcode = daemon.daemonize()
-	main()
+	#with open('ignore_files/test_page.txt','r') as page_file:
+	#write_html(page_file.read())
+	with DaemonContext():
+		main()
 
 
