@@ -84,19 +84,16 @@ def replace_words(page):
 	return " ".join(page_list)
 
 def write_html(text_content):
-	text_content = re.sub(r' +',' ',text_content)
-	text_content = re.sub(r'\t','',text_content)
-	words = text_content.count(' ') - 3
+	text_content = re.sub(r'\s*\n\s*','</p><p>',text_content)
+	words = len(re.findall(r'\S+'))
 	goal1 = str(words // 120) + ":" + str(int(60*(words/120.0-words//120)))
 	goal2 = str(words // 200) + ":" + str(int(60*(words/200.0-words//200)))
 	text_list = re.split(r'\n+',text_content)	
 	html_text = "<html><head><link rel=\"stylesheet\" href=\"articles.css\"></head><body>"
 	html_text = html_text + "<iframe src=\"http://ipadstopwatch.com/embed.html\" frameborder=\"0\" scrolling=\"no\" width=\"391\" height=\"140\"></iframe>"
 	html_text = html_text + "<div id=\"div0\"><p>" + str(words)  +" Words</p><p>goal 1: "+str(goal1) +"<button>Complete</button></p><p>goal 2: " + str(goal2) +  "<button>Complete</button></p></div>"
-	html_text = html_text + "<div id=\"div1\">"
-	for x in text_list:
-		html_text= html_text + "<p>" + x + "</p>"
-	html_text = html_text + "</div></body></html>"
+	html_text = html_text + "<div id=\"div1\"><p>"
+	html_text = html_text + "</p></div></body></html>"
 	html_file = open('new_page.html','w+')
 	html_file.write(html_text)
 	html_file.close()
