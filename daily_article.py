@@ -8,7 +8,6 @@ from shutil import copyfile
 from datetime import date
 import re
 import time
-from daemon import DaemonContext
 
 letter_order = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяа́я́е́є́и́і́ї́о́у́ю́'
 cap_letter_order = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯА́Я́Е́Є́И́І́Ї́О́У́Ю́'
@@ -105,20 +104,19 @@ def write_html(text_content):
 	html_file.close()
 
 def main():
-	while True:
-		pull_dicts()
-		page = get_page()
-		page = replace_words(page)
-		write_html(page)
-		os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
-		os.system("sudo cp articles.css /var/www/html/articles/articles.css")
-		print("Done for the day")
-		time.sleep(86400)	
+	pull_dicts()
+	page = get_page()
+	page = replace_words(page)
+	write_html(page)
+	os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
+	os.system("sudo cp articles.css /var/www/html/articles/articles.css")
+	print("Done for the day")
+	time.sleep(86400)	
 
 if __name__ == '__main__':
 	#with open('ignore_files/test_page.txt','r') as page_file:
 	#write_html(page_file.read())
-	with DaemonContext():
-		main()
+	#with DaemonContext():
+	main()
 
 
