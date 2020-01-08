@@ -118,7 +118,7 @@ def main():
 if __name__ == '__main__':
 	#with open('ignore_files/test_page.txt','r') as page_file:
 	#write_html(page_file.read())
-	#with daemon.DaemonContext():
-	main()
+	with daemon.DaemonContext():
+		main()
 
 
