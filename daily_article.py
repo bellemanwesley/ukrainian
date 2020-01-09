@@ -84,7 +84,7 @@ def replace_words(page):
 	return " ".join(page_list)
 
 def write_html(text_content):
-	text_content = re.sub(r'\n\s*','</p><p>',text_content)
+	text_content = re.sub(r'\n','</p><p>',text_content)
 	words = len(re.findall(r'\S+',text_content))
 	goal1 = str(words // 120) + ":" + str(int(60*(words/120.0-words//120)))
 	goal2 = str(words // 200) + ":" + str(int(60*(words/200.0-words//200)))
