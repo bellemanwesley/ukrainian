@@ -99,7 +99,7 @@ def write_html(text_content):
 	html_file.close()
 
 def main():
-	pull_dicts()
+	#pull_dicts()
 	page = get_page()
 	page = replace_words(page)
 	write_html(page)
