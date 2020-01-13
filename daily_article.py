@@ -8,6 +8,8 @@ from shutil import copyfile
 from datetime import date
 import re
 import time
+import urllib
+import ssl
 
 letter_order = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяа́я́е́є́и́і́ї́о́у́ю́'
 cap_letter_order = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯА́Я́Е́Є́И́І́Ї́О́У́Ю́'
@@ -98,6 +100,17 @@ def write_html(text_content):
 	html_file.write(html_text)
 	html_file.close()
 
+def translate(word):
+	ctx = ssl.create_default_context()
+	ctx.check_hostname = False
+	ctx.verify_mode = ssl.CERT_NONE
+	url_word = urllib.parse.quote(word)
+	response = urllib.request.urlopen('https://translate.googleapis.com/translate_a/single?client=gtx&sl=uk&tl=en&dt=t&q='+url_word,context=ctx)
+	html = str(response.read())
+	translation_start = html.find("[\"") + 2
+	translation_stop = html.find("\"",translation_start)
+	return html[translation_start:translation_stop]
+
 def main():
 	#pull_dicts()
 	page = get_page()
@@ -105,7 +118,6 @@ def main():
 	write_html(page)
 	os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
 	os.system("sudo cp articles.css /var/www/html/articles/articles.css")
-
 if __name__ == '__main__':
 	#with open('ignore_files/test_page.txt','r') as page_file:
 	#write_html(page_file.read())

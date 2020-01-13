@@ -58,9 +58,13 @@ def resendform(formdata,sequence,current_key):
 	my_log_file = open("ignore_files/debug_log.txt","a")
 	
 	whole_html = os.popen("curl http://lcorp.ulif.org.ua/dictua/dictua.aspx -X POST -d '"+formdata+"'").read()
-	current_key_correct = whole_html.find("<span class=\"word_style\" >"+current_key)
+	current_key_correct = whole_html.find("class=\"word_style\" >"+current_key)
 
 	if current_key_correct == -1:
+		my_log_file.close()
+		not_processed = open("ignore_files/not_processed.txt","a")
+		not_processed.write(current_key+"\n")
+		not_processed.close()
 		print("Bad Key")
 		return(['nokey'])
 	else:
@@ -110,8 +114,8 @@ def generate_pcap(key):
 
 if __name__ == '__main__':
 	os.system("echo '' | cat > ignore_files/debug_log.txt")
-	keys = ["інтелектуалі́ст"]
-	sequence = 66805
+	keys = ["Куртами́ш"]
+	sequence = 81781
 	while sequence < 260000:
 		with open('ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
