@@ -9,21 +9,22 @@ import time
 import os
 from multiprocessing import Process
 import copy
-from pyvirtualdisplay import Display
+#For Linux, use display
+#from pyvirtualdisplay import Display
 
 def capturepackets():
 	try:
-		os.remove('sentrequests.pcap')
+		os.remove('ignore_files/sentrequests.pcap')
 	except:
 		pass
-	os.system("tcpdump -i enp0s3 -nn 'host lcorp.ulif.org.ua and port 80' -w sentrequests.pcap -G 8 -W 1")
+	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w ignore_files/sentrequests.pcap -G 7 -W 1")
 
 def sendform(key):
-	print("Block 1")
 	option = Options()
 	option.add_argument("--headless")
-	option.add_argument('--no-sandbox')
 	#option.binary_location = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+	#For linux use:
+	#option.add_argument('--no-sandbox')
 
 	browser = webdriver.Chrome(executable_path='../tools/chromedriver', options=option)
 	browser.get("http://lcorp.ulif.org.ua/dictua/")
@@ -36,13 +37,12 @@ def sendform(key):
 	# get the submit button element
 	submit_element = browser.find_element_by_name("ctl00$ContentPlaceHolder1$search")
 	submit_element.click()
-	print("Block 2")
 
 def getformdata():
 	while_exit = 0
 	while while_exit == 0:
 		try:
-			my_form_data = pyshark.FileCapture('sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
+			my_form_data = pyshark.FileCapture('ignore_files/sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
 			while_exit = 1
 		except:
 			print("Failure")
@@ -53,18 +53,22 @@ def getformdata():
 		if my_form_data[i] == "'":
 			my_form_data = my_form_data[0:i] + "%27" + my_form_data[i+1:len(my_form_data)]
 
-	with open('datafile.txt','w+') as datafile:
+	with open('ignore_files/datafile.txt','w+') as datafile:
 		datafile.write(my_form_data)
 	print("Success")
 	return(my_form_data)
 
 def resendform(formdata,sequence,current_key):
-	my_log_file = open("debug_log.txt","a")
+	my_log_file = open("ignore_files/debug_log.txt","a")
 	
 	whole_html = os.popen("curl http://lcorp.ulif.org.ua/dictua/dictua.aspx -X POST -d '"+formdata+"'").read()
-	current_key_correct = whole_html.find("<span class=\"word_style\" >"+current_key)
+	current_key_correct = whole_html.find("class=\"word_style\" >"+current_key)
 
 	if current_key_correct == -1:
+		my_log_file.close()
+		not_processed = open("ignore_files/not_processed.txt","a")
+		not_processed.write(current_key+"\n")
+		not_processed.close()
 		print("Bad Key")
 		return(['nokey'])
 	else:
@@ -74,7 +78,7 @@ def resendform(formdata,sequence,current_key):
 	table_start = whole_html.find("<div align=\"center\">")
 	table_end = whole_html.find("<p class=\"comm_end_style\">",table_start)
 	html_result = whole_html[table_start:table_end]
-	with open('html_files/html_file'+str(sequence)+'.html','w+') as html_file:
+	with open('ignore_files/html_files/html_file'+str(sequence)+'.html','w+') as html_file:
 		if html_result == "":
 			html_file.write(current_key)
 		else:
@@ -113,14 +117,15 @@ def generate_pcap(key):
 		time.sleep(0.5)
 
 if __name__ == '__main__':
-	display = Display(visible=0, size=(800, 800))
-	display.start()
+	#For linux use:
+	#display = Display(visible=0, size=(800, 800))
+	#display.start()
 
-	os.system("echo '' | cat > debug_log.txt")
-	keys = ["Ваа́л"]
-	sequence = 0
-	while keys[0][0] == 'в' or keys[0][0] == 'В':
-		with open('debug_log.txt','a') as my_log_file:
+	os.system("echo '' | cat > ignore_files/debug_log.txt")
+	keys = ["Куртами́ш"]
+	sequence = 81781
+	while sequence < 260000:
+		with open('ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
 		result_keys = ['nokey']
 		key_i = 0
