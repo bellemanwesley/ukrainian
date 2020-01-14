@@ -13,7 +13,6 @@ master_file.close()
 completed_files = []
 
 def exit_call(message):
-	print(master_dict['льоноперероблення'])
 	master_file = open('ignore_files/word_files/master.json','w+')
 	master_file.write(json.dumps(master_dict,ensure_ascii=False))
 	master_file.close()

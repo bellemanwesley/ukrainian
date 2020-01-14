@@ -13,6 +13,7 @@ import ssl
 
 letter_order = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяа́я́е́є́и́і́ї́о́у́ю́'
 cap_letter_order = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯА́Я́Е́Є́И́І́Ї́О́У́Ю́'
+master_dict = {}
 
 def get_page():
 	main_page = os.popen("curl https://ua.korrespondent.net/").read()
@@ -64,23 +65,15 @@ def pull_dicts():
 	try:
 		os.system("mkdir ignore_files/dicts")
 	except:
-		pass
-	print
-	for letter in cap_letter_order+letter_order:
-		print(letter + " " + str(letter.encode('utf-8')))
-		new_json = os.popen("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/%"+str(letter.encode('utf-8'))[4:6]+"%"+str(letter.encode('utf-8'))[8:10]+".json").read()
-		if new_json.find("Access Denied") == -1:
-			with open("ignore_files/dicts/"+letter+".json","w+") as new_file:
-				new_file.write(new_json)
+	new_json = os.popen("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/master.json")
+	master_dict = json.loads(new_json.read())
+	del new_json
 
 def replace_words(page):
 	page_list = page.split(" ")
 	for i in range(len(page_list)):
 		try:
-			word_json = open("ignore_files/dicts/"+page_list[i][0]+".json","r")
-			word_dict = json.loads(word_json.read())
-			word_json.close()
-			page_list[i] = word_dict[page_list[i]]['accent']
+			page_list[i] = master_dict[page_list[i]]['accent']
 		except:
 			pass
 	return " ".join(page_list)
@@ -112,16 +105,14 @@ def translate(word):
 	return html[translation_start:translation_stop]
 
 def main():
-	#pull_dicts()
+	pull_dicts()
 	page = get_page()
 	page = replace_words(page)
 	write_html(page)
 	os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
 	os.system("sudo cp articles.css /var/www/html/articles/articles.css")
+
 if __name__ == '__main__':
-	#with open('ignore_files/test_page.txt','r') as page_file:
-	#write_html(page_file.read())
-	#with DaemonContext():
 	main()
 
 

@@ -122,8 +122,8 @@ if __name__ == '__main__':
 	#display.start()
 
 	os.system("echo '' | cat > ignore_files/debug_log.txt")
-	keys = ["Куртами́ш"]
-	sequence = 81781
+	keys = ["льонопереро́блення"]
+	sequence = 86459
 	while sequence < 260000:
 		with open('ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")

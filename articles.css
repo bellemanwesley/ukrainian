@@ -18,3 +18,56 @@ iframe {
 	width: 65%;
 	font-size: 300%;
 }
+
+#bookdiv0 {
+	position: fixed;
+	bottom: 5%;
+	right: -40%;
+	width: 65%;
+	font-size: 300%;
+}
+
+#bookdiv1 {
+	position: absolute;
+	top: 2%;
+	left: 2%;
+	width: 96%;
+	font-size: 150%;
+}
+
+#button0 {
+	border: none;
+	background-color: inherit;
+	font-size: 100%;
+	cursor: pointer;
+	display: inline-block;
+}
+
+#button2 {
+	border: none;
+	background-color: inherit;
+	font-size: 100%;
+	cursor: pointer;
+	display: inline-block;
+}
+
+#button0:hover{
+	background: #eee;
+}
+
+#button2:hover{
+	background: #eee;
+}
+
+#button1 {
+	/*border: none;*/
+	background-color: lightblue;
+	padding: 14px 28px;
+	font-size: 100%;
+	/*cursor: pointer;*/
+	/*display: inline-block;*/
+	color: black;
+}
+
+/* On mouse-over */
+#button1:hover {background: #eee;}
