@@ -66,7 +66,9 @@ def pull_dicts():
 		os.system("mkdir ignore_files/dicts")
 	except:
 		pass
-	master_dict = json.loads(os.popen("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/master.json").read())
+	os.system("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/master.json -o ignore_files/dicts/master.json")
+	with open('ignore_files/dicts/master.json','r') as master_file:
+		master_dict = json.dumps(master_file.read())
 
 def replace_words(page):
 	page_list = page.split(" ")
