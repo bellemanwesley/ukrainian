@@ -2,17 +2,13 @@ import os
 import json
 import copy
 from shutil import copyfile
-import atexit
 
-letter_order = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяа́я́е́є́и́і́ї́о́у́ю́'.encode('utf-16')
-cap_letter_order = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯА́Я́Е́Є́И́І́Ї́О́У́Ю́'.encode('utf-16')
-case = "відмінок"
 master_file = open('ignore_files/word_files/master.json','r')
 master_dict = json.loads(master_file.read())
 master_file.close()
 completed_files = []
 
-def exit_call(message):
+def program_exit(message):
 	master_file = open('ignore_files/word_files/master.json','w+')
 	master_file.write(json.dumps(master_dict,ensure_ascii=False))
 	master_file.close()
@@ -23,6 +19,8 @@ def exit_call(message):
 def generate_table(file_text):
 	word_type_start = file_text.find("gram_style") + 14
 	word_type_stop = file_text.find("</span>",word_type_start)
+	if word_type_start == -1 or word_type_stop == -1:
+		return([['other',file_text]])
 	word_type = file_text[word_type_start:word_type_stop]
 	root_start = file_text.find("word_style") + 13
 	root_stop = file_text.find("</span>",root_start) - 1
@@ -311,6 +309,57 @@ def build_dict_last_name(table):
 							result_dict[key].update({x:result_dict[key][x]+','+temp_dict[key][x]})
 	return result_dict
 
+def build_dict_num(table):
+	result_dict = {}
+	root = table[0][1]
+	for i in range(2,len(table)):
+		for j in range(1,len(table[i])):
+			key_text = table[i][j]
+			if key_text.find(",") != -1:
+				keys = key_text.split(",")
+			else:
+				keys = [key_text]
+			for key in keys:
+				accent = copy.copy(key)
+				key = key.encode('utf-8').replace(b'\xCC\x81',b'').decode('utf-8')
+				if len(key) > 4:
+					if key[0:4] == "на/в" or key[0:4] == "на/у":
+						key = key[4:len(key)]
+						accent = accent[4:len(accent)]
+					elif key[0:4] == "по" + root[0:2] or key[0:4] == "на" + root[0:2]:
+						key = key[2:len(key)]
+						accent = accent[2:len(accent)]
+					elif key[0:5] == "уна/у":
+						key = key [5:len(key)]
+						accent = accent[5:len(accent)]					
+				temp_dict = {key:{'accent':accent,'case':table[i][0],'part':table[0][0],'root':root}}
+				if key != "&nbsp;" and key not in result_dict:
+					result_dict.update(temp_dict)
+				elif key in result_dict:
+					for x in result_dict[key]:
+						if result_dict[key][x] != temp_dict[key][x]:
+							result_dict[key].update({x:result_dict[key][x]+','+temp_dict[key][x]})
+	return result_dict
+
+def build_dict_other(table):
+	result_dict = {}
+	key_text = table[0][1]
+	if key_text.find(",") != -1:
+		keys = key_text.split(",")
+	else:
+		keys = [key_text]
+	for key in keys:
+		accent = copy.copy(key)
+		key = key.encode('utf-8').replace(b'\xCC\x81',b'').decode('utf-8')
+		temp_dict = {key:{'accent':accent}}
+		if key != "&nbsp;" and key not in result_dict:
+			result_dict.update(temp_dict)
+		elif key in result_dict:
+			for x in result_dict[key]:
+				if result_dict[key][x] != temp_dict[key][x]:
+					result_dict[key].update({x:result_dict[key][x]+','+temp_dict[key][x]})
+	return result_dict
+
 def add_dict(my_dict):
 	for x in my_dict:
 		if x in master_dict:
@@ -333,22 +382,21 @@ def complete_file(new_dict,file_name):
 	completed_files.append(file_name)
 
 if __name__ == '__main__':
-	atexit.register(exit_call,"exited successfully")
 	for file_name in os.listdir("ignore_files/html_files"):
-	#for file_name in ["html_file86459.html"]:
+	#for file_name in ["html_file106210.html"]:
 		if file_name[0:9] == "html_file":
 			print(file_name)
 			file_file = open("ignore_files/html_files/"+file_name,"r")
 			file_text = file_file.read()
 			file_file.close()
 			file_table = generate_table(file_text)
-			if file_table[0][0].find("іменник") != -1:
+			if file_table[0][0].find("іменник") != -1 or file_table[0][0].find("власна назва") != -1:
 				new_dict = build_dict_noun(file_table)
 				complete_file(new_dict,file_name)
-			elif file_table[0][0].find("прикметник") != -1:
+			elif file_table[0][0].find("прикметник") != -1 or file_table[0][0].find("займенник") != -1 or file_table[0][0].find("числівник порядковий") != -1:
 				new_dict = build_dict_adjective(file_table)
 				complete_file(new_dict,file_name)
-			elif file_table[0][0].find("дієслово недоконаного виду") != -1:
+			elif file_table[0][0].find("дієслово недоконаного") != -1:
 				new_dict = build_dict_imperf_verb(file_table)
 				complete_file(new_dict,file_name)
 			elif file_table[0][0].find("дієслово доконаного виду") != -1:
@@ -357,6 +405,14 @@ if __name__ == '__main__':
 			elif file_table[0][0].find("прізвище") != -1:		
 				new_dict = build_dict_last_name(file_table)
 				complete_file(new_dict,file_name)
+			elif file_table[0][0].find("числівник кількісний") != -1:
+				new_dict = build_dict_num(file_table)
+				complete_file(new_dict,file_name)
+			elif file_table[0][0] == 'other':
+				new_dict = build_dict_other(file_table)
+				complete_file(new_dict,file_name)
+	program_exit("exited successfully")
+
 
 
 

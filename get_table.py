@@ -53,8 +53,8 @@ def getformdata():
 		if my_form_data[i] == "'":
 			my_form_data = my_form_data[0:i] + "%27" + my_form_data[i+1:len(my_form_data)]
 
-	with open('ignore_files/datafile.txt','w+') as datafile:
-		datafile.write(my_form_data)
+	#with open('ignore_files/datafile.txt','w+') as datafile:
+		#datafile.write(my_form_data)
 	print("Success")
 	return(my_form_data)
 
@@ -122,8 +122,8 @@ if __name__ == '__main__':
 	#display.start()
 
 	os.system("echo '' | cat > ignore_files/debug_log.txt")
-	keys = ["льонопереро́блення"]
-	sequence = 86459
+	keys = ["нена́си́тність"]
+	sequence = 107395
 	while sequence < 260000:
 		with open('ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")

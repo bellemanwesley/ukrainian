@@ -13,9 +13,6 @@ import ssl
 
 letter_order = 'абвгґдеєжзиіїйклмнопрстуфхцчшщьюяа́я́е́є́и́і́ї́о́у́ю́'
 cap_letter_order = 'АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯА́Я́Е́Є́И́І́Ї́О́У́Ю́'
-os.system("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/master.json -o ignore_files/dicts/master.json")
-with open('ignore_files/dicts/master.json','r') as master_file:
-	master_dict = json.loads(master_file.read())
 
 def get_page():
 	main_page = os.popen("curl https://ua.korrespondent.net/").read()
@@ -61,6 +58,9 @@ def remove_tags(html):
 
 
 def replace_words(page):
+	os.system("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/master.json -o ignore_files/dicts/master.json")
+	with open('ignore_files/dicts/master.json','r') as master_file:
+		master_dict = json.loads(master_file.read())
 	page_list = page.split(" ")
 	for i in range(len(page_list)):
 		try:
