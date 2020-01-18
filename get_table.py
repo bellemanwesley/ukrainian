@@ -9,7 +9,7 @@ import time
 import os
 from multiprocessing import Process
 import copy
-from daemon
+import daemon
 #For Linux, use display
 #from pyvirtualdisplay import Display
 pid = "/tmp/table_getter.pid"
