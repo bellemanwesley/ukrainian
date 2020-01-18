@@ -9,7 +9,7 @@ import time
 import os
 from multiprocessing import Process
 import copy
-from daemonize import Daemonize
+from daemon
 #For Linux, use display
 #from pyvirtualdisplay import Display
 pid = "/tmp/table_getter.pid"
@@ -141,8 +141,8 @@ if __name__ == '__main__':
 	#For linux use:
 	#display = Display(visible=0, size=(800, 800))
 	#display.start()
-	daemon = Daemonize(app="get_table", pid=pid, action=main)
-	daemon.start()
+	with daemon.DaemonContext():
+		main()
 
 
 
