@@ -9,8 +9,10 @@ import time
 import os
 from multiprocessing import Process
 import copy
+from daemonize import Daemonize
 #For Linux, use display
 #from pyvirtualdisplay import Display
+pid = "/tmp/table_getter.pid"
 
 def capturepackets():
 	try:
@@ -116,14 +118,10 @@ def generate_pcap(key):
 		p2.join()
 		time.sleep(0.5)
 
-if __name__ == '__main__':
-	#For linux use:
-	#display = Display(visible=0, size=(800, 800))
-	#display.start()
-
+def main():
 	os.system("echo '' | cat > ignore_files/debug_log.txt")
-	keys = ["нена́си́тність"]
-	sequence = 107395
+	keys = ["ю́рпільський"]
+	sequence = 108769
 	while sequence < 260000:
 		with open('ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
@@ -138,5 +136,13 @@ if __name__ == '__main__':
 			key_i += 1
 		sequence += 1
 		keys = result_keys
+
+if __name__ == '__main__':
+	#For linux use:
+	#display = Display(visible=0, size=(800, 800))
+	#display.start()
+	daemon = Daemonize(app="get_table", pid=pid, action=main)
+	daemon.start()
+
 
 
