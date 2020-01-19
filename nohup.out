@@ -1,8 +1,0 @@
-Traceback (most recent call last):
-  File "get_table.py", line 143, in <module>
-    sequence = int(last_entry[seq_start:seq_end])
-ValueError: invalid literal for int() with base 10: ''
-Traceback (most recent call last):
-  File "get_table.py", line 143, in <module>
-    sequence = int(last_entry[seq_start:seq_end])
-ValueError: invalid literal for int() with base 10: ''
