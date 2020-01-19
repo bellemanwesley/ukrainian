@@ -10,14 +10,15 @@ import os
 from multiprocessing import Process
 import copy
 
-working_directory = os.popen("pwd").read()
+#working_directory = '/home/wesley/repos/ukrainian/'
+working_directory = ''
 
 def capturepackets():
 	try:
-		os.remove('/home/wesley/repos/ukrainian/ignore_files/sentrequests.pcap')
+		os.remove(working_directory+'ignore_files/sentrequests.pcap')
 	except:
 		pass
-	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w /home/wesley/repos/ukrainian/ignore_files/sentrequests.pcap -G 7 -W 1")
+	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w "+working_directory+"ignore_files/sentrequests.pcap -G 7 -W 1")
 
 def sendform(key):
 	option = Options()
@@ -39,7 +40,7 @@ def getformdata():
 	while_exit = 0
 	while while_exit == 0:
 		try:
-			my_form_data = pyshark.FileCapture('/home/wesley/repos/ukrainian/ignore_files/sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
+			my_form_data = pyshark.FileCapture(working_directory+'ignore_files/sentrequests.pcap',display_filter='urlencoded-form')[0].http.file_data
 			while_exit = 1
 		except:
 			print("Failure")
@@ -56,14 +57,14 @@ def getformdata():
 	return(my_form_data)
 
 def resendform(formdata,sequence,current_key):
-	my_log_file = open("/home/wesley/repos/ukrainian/ignore_files/debug_log.txt","a")
+	my_log_file = open(working_directory+"ignore_files/debug_log.txt","a")
 	
 	whole_html = os.popen("curl http://lcorp.ulif.org.ua/dictua/dictua.aspx -X POST -d '"+formdata+"'").read()
 	current_key_correct = whole_html.find("class=\"word_style\" >"+current_key)
 
 	if current_key_correct == -1:
 		my_log_file.close()
-		not_processed = open("/home/wesley/repos/ukrainian/ignore_files/not_processed.txt","a")
+		not_processed = open(working_directory+"ignore_files/not_processed.txt","a")
 		not_processed.write(current_key+"\n")
 		not_processed.close()
 		print("Bad Key")
@@ -75,7 +76,7 @@ def resendform(formdata,sequence,current_key):
 	table_start = whole_html.find("<div align=\"center\">")
 	table_end = whole_html.find("<p class=\"comm_end_style\">",table_start)
 	html_result = whole_html[table_start:table_end]
-	with open('/home/wesley/repos/ukrainian/ignore_files/html_files/html_file'+str(sequence)+'.html','w+') as html_file:
+	with open(working_directory+'ignore_files/html_files/html_file'+str(sequence)+'.html','w+') as html_file:
 		if html_result == "":
 			html_file.write(current_key)
 		else:
@@ -114,10 +115,10 @@ def generate_pcap(key):
 		time.sleep(0.5)
 
 def main(key,sequence):
-	os.system("echo '' | cat > /home/wesley/repos/ukrainian/ignore_files/debug_log.txt")
+	#os.system("echo '' | cat > /home/wesley/repos/ukrainian/ignore_files/debug_log.txt")
 	keys = [key]
 	while sequence < 260000:
-		with open('/home/wesley/repos/ukrainian/ignore_files/debug_log.txt','a') as my_log_file:
+		with open(working_directory+'ignore_files/debug_log.txt','a') as my_log_file:
 			my_log_file.write("Sequence: "+str(sequence)+"    ")
 		result_keys = ['nokey']
 		key_i = 0
@@ -132,7 +133,7 @@ def main(key,sequence):
 		keys = result_keys
 
 if __name__ == '__main__':
-	debug_log_file = open('/home/wesley/repos/ukrainian/ignore_files/debug_log.txt','r')
+	debug_log_file = open(working_directory+'ignore_files/debug_log.txt','r')
 	debug_log = debug_log_file.readlines()
 	debug_log_file.close()
 	last_entry = debug_log[len(debug_log)-2]
