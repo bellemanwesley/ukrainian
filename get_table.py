@@ -10,20 +10,20 @@ import os
 from multiprocessing import Process
 import copy
 
-working_directory = os.popen("pwd").read()
+#working_directory = os.popen("pwd").read()
 
 def capturepackets():
 	try:
 		os.remove('/home/wesley/repos/ukrainian/ignore_files/sentrequests.pcap')
 	except:
 		pass
-	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w /home/wesley/repos/ukrainian/ignore_files/sentrequests.pcap -G 7 -W 1")
+	os.system("tcpdump -i enp0s3 -nn 'host lcorp.ulif.org.ua and port 80' -w /home/wesley/repos/ukrainian/ignore_files/sentrequests.pcap -G 7 -W 1")
 
 def sendform(key):
 	option = Options()
 	option.add_argument("--headless")
 
-	browser = webdriver.Chrome(executable_path='../tools/chromedriver', options=option)
+	browser = webdriver.Chrome(executable_path='/home/wesley/repos/tools/chromedriver', options=option)
 	browser.get("http://lcorp.ulif.org.ua/dictua/")
 
 	# get the text submission element
@@ -114,7 +114,7 @@ def generate_pcap(key):
 		time.sleep(0.5)
 
 def main(key,sequence):
-	os.system("echo '' | cat > /home/wesley/repos/ukrainian/ignore_files/debug_log.txt")
+	#os.system("echo '' | cat > /home/wesley/repos/ukrainian/ignore_files/debug_log.txt")
 	keys = [key]
 	while sequence < 260000:
 		with open('/home/wesley/repos/ukrainian/ignore_files/debug_log.txt','a') as my_log_file:
