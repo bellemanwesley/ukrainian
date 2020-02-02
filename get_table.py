@@ -35,6 +35,8 @@ def sendform(key):
 	# get the submit button element
 	submit_element = browser.find_element_by_name("ctl00$ContentPlaceHolder1$search")
 	submit_element.click()
+	time.sleep(0.5)
+	browser.quit()
 
 def getformdata():
 	while_exit = 0
@@ -112,25 +114,24 @@ def generate_pcap(key):
 		time.sleep(0.5)
 		p2.start()
 		p2.join()
-		time.sleep(0.5)
 
 def main(key,sequence):
 	#os.system("echo '' | cat > /home/wesley/repos/ukrainian/ignore_files/debug_log.txt")
 	keys = [key]
 	while sequence < 260000:
-		with open(working_directory+'ignore_files/debug_log.txt','a') as my_log_file:
-			my_log_file.write("Sequence: "+str(sequence)+"    ")
-		result_keys = ['nokey']
-		key_i = 0
-		while result_keys[0] == 'nokey':
-			my_form_data = "Failure"
-			while my_form_data == "Failure":
-				generate_pcap(keys[key_i])
-				my_form_data = getformdata()
-			result_keys = resendform(my_form_data,sequence,keys[key_i])
-			key_i += 1
-		sequence += 1
-		keys = result_keys
+ 		with open(working_directory+'ignore_files/debug_log.txt','a') as my_log_file:
+ 			my_log_file.write("Sequence: "+str(sequence)+"    ")
+ 		result_keys = ['nokey']
+ 		key_i = 0
+ 		while result_keys[0] == 'nokey':
+ 			my_form_data = "Failure"
+ 			while my_form_data == "Failure":
+ 				generate_pcap(keys[key_i])
+ 				my_form_data = getformdata()
+ 			result_keys = resendform(my_form_data,sequence,keys[key_i])
+ 			key_i += 1
+ 		sequence += 1
+ 		keys = result_keys
 
 if __name__ == '__main__':
 	debug_log_file = open(working_directory+'ignore_files/debug_log.txt','r')

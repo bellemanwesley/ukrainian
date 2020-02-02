@@ -384,12 +384,13 @@ def complete_file(new_dict,file_name):
 if __name__ == '__main__':
 	for file_name in os.listdir("ignore_files/html_files"):
 	#for file_name in ["html_file106210.html"]:
-		if file_name[0:9] == "html_file":
+		if file_name[0] != ".":
 			print(file_name)
 			file_file = open("ignore_files/html_files/"+file_name,"r")
 			file_text = file_file.read()
 			file_file.close()
 			file_table = generate_table(file_text)
+			print(file_table)
 			if file_table[0][0].find("іменник") != -1 or file_table[0][0].find("власна назва") != -1:
 				new_dict = build_dict_noun(file_table)
 				complete_file(new_dict,file_name)
@@ -411,6 +412,9 @@ if __name__ == '__main__':
 			elif file_table[0][0] == 'other':
 				new_dict = build_dict_other(file_table)
 				complete_file(new_dict,file_name)
+			elif file_table[0][0] == "числівник":
+				new_dict = build_dict_adjective(file_table)
+				complete_file(new_dict,file_name)				
 	program_exit("exited successfully")
 
 
