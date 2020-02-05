@@ -13,18 +13,23 @@ import copy
 #working_directory = '/home/wesley/repos/ukrainian/'
 working_directory = ''
 
+interface='en0'
+#interface='enp0s3'
+#interface='eth0'
+
 def capturepackets():
 	try:
 		os.remove(working_directory+'ignore_files/sentrequests.pcap')
 	except:
 		pass
-	os.system("tcpdump -i en0 -nn 'host lcorp.ulif.org.ua and port 80' -w "+working_directory+"ignore_files/sentrequests.pcap -G 7 -W 1")
+
+	os.system("tcpdump -i "+interface+" -nn 'host lcorp.ulif.org.ua and port 80' -w "+working_directory+"ignore_files/sentrequests.pcap -G 7 -W 1")
 
 def sendform(key):
 	option = Options()
 	option.add_argument("--headless")
 
-	browser = webdriver.Chrome(executable_path='../tools/chromedriver', options=option)
+	browser = webdriver.Chrome(executable_path='/Users/wesley/Documents/Personal Development/IT/tools/chromedriver', options=option)
 	browser.get("http://lcorp.ulif.org.ua/dictua/")
 
 	# get the text submission element
@@ -58,27 +63,19 @@ def getformdata():
 	print("Success")
 	return(my_form_data)
 
-def resendform(formdata,sequence,current_key):
-	my_log_file = open(working_directory+"ignore_files/debug_log.txt","a")
-	
+def resendform(formdata,sequence,current_key):	
 	whole_html = os.popen("curl http://lcorp.ulif.org.ua/dictua/dictua.aspx -X POST -d '"+formdata+"'").read()
 	current_key_correct = whole_html.find("class=\"word_style\" >"+current_key)
 
 	if current_key_correct == -1:
-		my_log_file.close()
-		not_processed = open(working_directory+"ignore_files/not_processed.txt","a")
-		not_processed.write(current_key+"\n")
-		not_processed.close()
 		print("Bad Key")
+		print(whole_html)
 		return(['nokey'])
-	else:
-		my_log_file.write("Key: "+current_key+"\n")
-		my_log_file.close()
 
 	table_start = whole_html.find("<div align=\"center\">")
 	table_end = whole_html.find("<p class=\"comm_end_style\">",table_start)
 	html_result = whole_html[table_start:table_end]
-	with open(working_directory+'ignore_files/html_files/html_file'+str(sequence)+'.html','w+') as html_file:
+	with open(working_directory+'ignore_files/html_files/html_filet2'+str(sequence)+'.html','w+') as html_file:
 		if html_result == "":
 			html_file.write(current_key)
 		else:
@@ -115,36 +112,23 @@ def generate_pcap(key):
 		p2.start()
 		p2.join()
 
-def main(key,sequence):
-	#os.system("echo '' | cat > /home/wesley/repos/ukrainian/ignore_files/debug_log.txt")
-	keys = [key]
-	while sequence < 260000:
- 		with open(working_directory+'ignore_files/debug_log.txt','a') as my_log_file:
- 			my_log_file.write("Sequence: "+str(sequence)+"    ")
+def main():
+	keys_file = open(working_directory+'ignore_files/not_processed.txt','r')
+	keys = keys_file.readlines()
+	keys_file.close()
+	key_i = 0
+	while key_i < len(keys):
  		result_keys = ['nokey']
- 		key_i = 0
  		while result_keys[0] == 'nokey':
  			my_form_data = "Failure"
  			while my_form_data == "Failure":
  				generate_pcap(keys[key_i])
  				my_form_data = getformdata()
- 			result_keys = resendform(my_form_data,sequence,keys[key_i])
+ 			result_keys = resendform(my_form_data,key_i,keys[key_i])
  			key_i += 1
- 		sequence += 1
- 		keys = result_keys
 
 if __name__ == '__main__':
-	debug_log_file = open(working_directory+'ignore_files/debug_log.txt','r')
-	debug_log = debug_log_file.readlines()
-	debug_log_file.close()
-	last_entry = debug_log[len(debug_log)-2]
-	seq_start = last_entry.find("Sequence: ") + 10
-	seq_end = last_entry.find("    ",seq_start)
-	key_start = last_entry.find("Key: ",seq_end) + 5
-	key_end = last_entry.find("\n")
-	sequence = int(last_entry[seq_start:seq_end])
-	key = last_entry[key_start:key_end]
-	main(key,sequence)
+	main()
 
 
 

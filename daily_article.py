@@ -20,6 +20,7 @@ def get_page():
 	link_start = main_page.find("href=\"",search_index) + 6
 	link_end = main_page.find("\">",link_start)
 	link = main_page[link_start:link_end]
+	print(link)
 	article_page = os.popen("curl "+link).read()
 	del(main_page)
 	article_start = article_page.find("<div class=\"post-item__text\">")
@@ -58,8 +59,8 @@ def remove_tags(html):
 
 
 def replace_words(page):
-	os.system("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/master.json -o ignore_files/dicts/master.json")
-	with open('ignore_files/dicts/master.json','r') as master_file:
+	#os.system("curl https://ukrainian-words.s3.us-east-2.amazonaws.com/master.json -o ignore_files/dicts/master.json")
+	with open('ignore_files/word_files/master.json','r') as master_file:
 		master_dict = json.loads(master_file.read())
 	page_list = page.split(" ")
 	for i in range(len(page_list)):
@@ -80,7 +81,7 @@ def write_html(text_content):
 	html_text = html_text + "<div id=\"div1\"><p>"
 	html_text = html_text + text_content
 	html_text = html_text + "</p></div></body></html>"
-	html_file = open('new_page.html','w+')
+	html_file = open('ignore_files/new_page.html','w+')
 	html_file.write(html_text)
 	html_file.close()
 
@@ -99,8 +100,8 @@ def main():
 	page = get_page()
 	page = replace_words(page)
 	write_html(page)
-	os.system("sudo cp new_page.html /var/www/html/articles/"+str(date.today())+".html")
-	os.system("sudo cp articles.css /var/www/html/articles/articles.css")
+	os.system("sudo cp ignore_files/new_page.html /var/www/html/articles/"+str(date.today())+".html")
+	os.system("sudo cp webpage_files/articles.css /var/www/html/articles/articles.css")
 
 if __name__ == '__main__':
 	main()

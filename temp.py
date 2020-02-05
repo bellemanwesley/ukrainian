@@ -11,12 +11,12 @@ import boto3
 import os
 
 s3 = boto3.client('s3')
-index = 5350
+index = 25915
 status = 0
-while index < 11877:
-	s3.download_file('ukrainian-words', 'm7html/html_file'+str(index)+'.html', 'ignore_files/html_files/m7html_file'+str(index)+'.html')
+while index < 45485:
+	s3.download_file('ukrainian-words', 'm9html/html_file'+str(index)+'.html', 'ignore_files/html_files/m9html_file'+str(index)+'.html')
 	index += 1
-	if status != int(100*index/11877.0):
-		status = int(100*index/11877.0)
+	if status != int(100*index/45485.0):
+		status = int(100*index/45485.0)
 		print(status)
 #'''
