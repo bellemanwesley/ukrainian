@@ -1,3 +1,8 @@
+ukrainian
+========
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 # ukrainian
 This repository consists of Python scripts that generate learning aides for learning Ukrainian. I currently have three available scripts. Each has a separate function.
 ## *_get-table.py
